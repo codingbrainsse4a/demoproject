@@ -1,38 +1,47 @@
 const router = require('router');
 const mysql = require('mysql');
 const frontend = router();
-const con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "nodejs"
+
+var pool  = mysql.createPool({
+  connectionLimit : 10,
+  host            : 'localhost',
+  user            : 'root',
+  password        : '',
+  database        : 'nodejs'
 });
 
-
 frontend.get('/',function(req,res,next){
-	res.render('pages/index', {
-	  	title: 'Welcome to property Management System',
-	  	data: "Home Page",
-	  	layout: 'layout'
+
+	pool.query('SELECT * from customers', function (error, results, fields) {
+	  	if (error) throw error;
+	  	console.log('The solution is: ', results);
+		res.render('pages/index', {
+		  	title: 'Welcome to property Management System',
+		  	data: results,
+		  	layout: 'layout'
+		});
 	});
-	
+
 });
 
 frontend.get('/about-us',function(req,res,next){
-	res.render('pages/aboutUs', {
-	  	title: 'About Us',
-	  	data: "Home Page",
-	  	layout: 'innerPage'
-	});
-	
+
+	pool.query('SELECT * from customers', function (error, results, fields) {
+	  	if (error) throw error;
+	  	console.log('The solution is: ', results);
+		res.render('pages/aboutUs', {
+		  	title: 'About Us',
+		  	data: "Home Page",
+		  	layout: 'innerPage'
+		});
+	});	
 });
 frontend.get('/our-partners',function(req,res,next){
 	res.render('pages/ourPartners', {
 	  	title: 'our-partners',
 	  	data: "Home Page",
 	  	layout: 'innerPage'
-	});
-	
+	});	
 });
 
 frontend.get('/property/:property_slug',function(req,res,next){
