@@ -4,9 +4,8 @@ const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
 var exphbs  = require('express-handlebars');
-
-
 const app = express();
+const auth = require('./routes/frontend');
 const frontend = require('./routes/frontend');
 
 

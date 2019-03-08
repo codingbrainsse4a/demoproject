@@ -1,7 +1,11 @@
+
+
+
 const auth = {
 
 	isLogin : function() {
-		// body...
+		
+		return true;
 	}
 
 
